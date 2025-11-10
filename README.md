@@ -2,7 +2,7 @@
 
 ## Abstract
 
-* **(Please fill in the abstract of your paper here.)**
+Modern data-driven recommendation systems risk memorizing sensitive user behavioral patterns, raising privacy concerns. Existing recommendation unlearning methods, while capable of removing target data influence, suffer from slow unlearning speed and performance degradation, failing to meet real-time unlearning demands. Considering the ranking-oriented nature of recommendation systems, we present unranking, the process of reducing the ranking positions of target items while ensuring the formal guarantees of recommendation unlearning. To achieve efficient unranking, we propose \textit{Learning to Fast Unrank in Collaborative Filtering Recommendation} (L2UnRank), which operates through three key stages: (a) identifying the influenced scope via interaction-based $p$-hop propagation, (b) computing structural and semantic influences for entities within this scope, and (c) performing efficient, ranking-aware parameter updates guided by influence information. Extensive experiments across multiple datasets and backbone models demonstrate L2UnRank's model-agnostic nature, achieving state-of-the-art unranking effectiveness and maintaining recommendation quality comparable to retraining, while also delivering a 50$\times$ speedup over existing methods.
 
 ## Code Structure
 
@@ -86,3 +86,4 @@ python main.py \
 --num_runs 10 \
 --output_result_path output_results/ml-1m_lightgcn_0.05n.csv
 ```
+
