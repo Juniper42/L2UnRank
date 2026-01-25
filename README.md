@@ -1,8 +1,8 @@
-# Learning to Fast Unrank in Collaborative Filtering Recommendation
+# Fast Unranking for Preference Revision in Collaborative Filtering Recommendation
 
 ## Abstract
 
-Modern data-driven recommendation systems risk memorizing sensitive user behavioral patterns, raising privacy concerns. Existing recommendation unlearning methods, while capable of removing target data influence, suffer from slow unlearning speed and performance degradation, failing to meet real-time unlearning demands. Considering the ranking-oriented nature of recommendation systems, we present unranking, the process of reducing the ranking positions of target items while ensuring the formal guarantees of recommendation unlearning. To achieve efficient unranking, we propose \textit{Learning to Fast Unrank in Collaborative Filtering Recommendation} (L2UnRank), which operates through three key stages: (a) identifying the influenced scope via interaction-based $p$-hop propagation, (b) computing structural and semantic influences for entities within this scope, and (c) performing efficient, ranking-aware parameter updates guided by influence information. Extensive experiments across multiple datasets and backbone models demonstrate L2UnRank's model-agnostic nature, achieving state-of-the-art unranking effectiveness and maintaining recommendation quality comparable to retraining, while also delivering a 50$\times$ speedup over existing methods.
+In collaborative filtering, it is crucial to efficiently update the model in response to user requests when they express unwanted feedback on previously preferred items. Recommendation unlearning offers a potential solution by removing the influence of outdated interactions without full model retraining. Existing unlearning methods predominantly prioritize privacy protection by erasing specific interaction data. However, this complete erasure paradigm, though vital for privacy compliance, is often unnecessarily stringent for preference revision scenarios, considering that recommendation is a ranking-oriented task. We argue that addressing outdated preferences does not require interaction deletion; rather, demoting target items to lower ranking positions suffices to suppress their unwanted visibility. Motivated by this insight, we introduce $\textit{unranking}$—a practical paradigm that shifts the focus from data erasure to rank demotion without model retraining. To achieve this goal at scale, we propose $\textbf{L2UnRank}$ (Learning to Unrank), a model-agnostic framework that enables fast and effective preference revision of trained recommendation models. Specifically, L2UnRank achieves efficiency by confining influence propagation to local neighborhoods, while ensuring effective unranking through influence-aware parameter updates. Furthermore, when privacy compliance is required, L2UnRank can be transformed to recommendation unlearning by incorporating differential privacy noise during parameter updates. Extensive experiments across five benchmark datasets and three backbones demonstrate that L2UnRank achieves up to 40$\times$ speedup over baselines while maintaining recommendation quality.
 
 ## Code Structure
 
@@ -34,56 +34,4 @@ Project/
     pip install -r requirements.txt
     ```
 
-## How to Run
-
-The main script for running all experiments is `main.py`. You can configure the experiment using command-line arguments. Parameters are defined in the `parameters.py`.
-
-运行方法如下所示：
-
-### Retrain
-
-```bash
-python main.py \
---method retrain \ 
---dataset ml-1m \
---backbone lightgcn \ 
---lr 0.0001 \
---epoch 1000 \
---batch_size 1024 \
---emb_dim 64 \
---num_layers 2 \
---weight_decay 0.0001 \ 
---neg_samples 1 \
---unlearning_task item \ 
---unlearning_ratio 0.05 \
---test_size 0.2 \
---num_runs 10 \
---output_result_path output_results/ml-1m_lightgcn_0.05n.csv
-```
-
-### L2UnRank
-
-```bash
-python main.py \
---method l2unrank \
---dataset ml-1m \
---backbone lightgcn \ 
---lr 0.0001 \
---epoch 1000 \
---batch_size 1024 \
---emb_dim 64 \
---num_layers 2 \
---weight_decay 0.0001 \
---neg_samples 1 \
---unlearning_task item \
---unlearning_ratio 0.05 \
---test_size 0.2 \
---influence_hops 1 \ 
---iteration 5 \ 
---scale 0.1 \
---degree_weight 0.5 \
---score_weight 0.5 \
---num_runs 10 \
---output_result_path output_results/ml-1m_lightgcn_0.05n.csv
-```
 
