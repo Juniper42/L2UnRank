@@ -36,6 +36,7 @@ class Config:
                 "ifru",
                 "sisa",
                 "certified_removal",
+                "gferaser"
             ],
             help="Unlearning method to use.",
         )
@@ -460,3 +461,4 @@ class Config:
         )
 
         return parser
+
